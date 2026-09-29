@@ -47,6 +47,10 @@ export class Item extends Document {
 
     @Prop({ type: [String], default: [] })
     categoryIds: string[];
+
+    @Prop({ type: [Number], default: [] })
+    embedding: number[];
+
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);
