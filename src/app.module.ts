@@ -7,7 +7,7 @@ import { ItemsModule } from './items/items.module.js';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URI || ''),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     ItemsModule
   ],
   controllers: [AppController],

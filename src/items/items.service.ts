@@ -17,9 +17,7 @@ export class ItemsService {
         return this.itemModel.find().exec();
     }
 
-    /**
-     * Combines title, brand, sold_by, features, and description into a single string for embedding.
-     */
+
     createTextForEmbedding(item: Partial<Item>): string {
         const parts: string[] = [];
 
@@ -91,10 +89,8 @@ export class ItemsService {
     }
 
     async searchSimilar(query: string, limit: number = 5): Promise<any[]> {
-        // 1. Generate 384-d vector for user query
+    
         const queryVector = await this.generateVector(query);
-
-        // Try MongoDB Atlas $vectorSearch first if configured
         try {
             const results = await this.itemModel.aggregate([
                 {
@@ -123,10 +119,10 @@ export class ItemsService {
                 return results;
             }
         } catch (e) {
-            // Atlas $vectorSearch failed or not configured, fallback to in-memory cosine similarity
+   
         }
 
-        // 2. Fallback: Exact Cosine Similarity Calculation
+     
         const items = await this.itemModel.find({
             embedding: { $exists: true, $not: { $size: 0 } },
         }).exec();
